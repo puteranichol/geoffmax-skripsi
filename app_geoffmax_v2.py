@@ -18,11 +18,216 @@ st.set_page_config(
     layout="wide"
 )
 
-# ── KONSTANTA ─────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════
+# PALET WARNA (mengikuti tema referensi: biru + putih + aksen pastel)
+# ══════════════════════════════════════════════════════════
+BLUE          = "#3B82F6"
+BLUE_DARK     = "#1D4ED8"
+BLUE_LIGHT    = "#EAF2FF"
+TEAL          = "#2ED8B6"
+TEAL_LIGHT    = "#E3FBF6"
+CORAL         = "#FF6B81"
+CORAL_LIGHT   = "#FFE9EC"
+ORANGE        = "#FFA26B"
+ORANGE_LIGHT  = "#FFF1E6"
+TEXT_DARK     = "#241E42"
+TEXT_MUTED    = "#8E8AA6"
+BG_APP        = "#F6F5FB"
+CARD_BORDER   = "#EFEDFB"
+
 LABELS_TEXT  = ['Tidak Puas', 'Puas']
 LABELS_ORDER = [0, 1]
 LABEL_MAP    = {0: 'Tidak Puas', 1: 'Puas'}
-WARNA        = {'Tidak Puas': '#E74C3C', 'Puas': '#27AE60'}
+WARNA        = {'Tidak Puas': CORAL, 'Puas': TEAL}
+
+# ══════════════════════════════════════════════════════════
+# CSS GLOBAL — meniru gaya kartu + sidebar pada referensi
+# ══════════════════════════════════════════════════════════
+CUSTOM_CSS = f"""
+<style>
+    .stApp {{
+        background-color: {BG_APP};
+    }}
+
+    /* ---------- Sidebar ---------- */
+    section[data-testid="stSidebar"] {{
+        background-color: #FFFFFF;
+        border-right: 1px solid {CARD_BORDER};
+    }}
+    section[data-testid="stSidebar"] .block-container {{
+        padding-top: 1.5rem;
+    }}
+
+    /* Judul sidebar */
+    section[data-testid="stSidebar"] h1 {{
+        color: {TEXT_DARK};
+        font-size: 1.3rem;
+        font-weight: 800;
+    }}
+    section[data-testid="stSidebar"] .stCaption, 
+    section[data-testid="stSidebar"] p {{
+        color: {TEXT_MUTED};
+    }}
+
+    /* Navigasi radio -> jadi list menu ala sidebar referensi */
+    div[role="radiogroup"] {{
+        gap: 4px;
+    }}
+    div[role="radiogroup"] > label {{
+        background-color: transparent;
+        border-radius: 12px;
+        padding: 10px 14px !important;
+        margin-bottom: 2px;
+        transition: all 0.15s ease-in-out;
+        border: 1px solid transparent;
+    }}
+    div[role="radiogroup"] > label:hover {{
+        background-color: {BLUE_LIGHT};
+    }}
+    div[role="radiogroup"] > label[data-checked="true"],
+    div[role="radiogroup"] > label:has(input:checked) {{
+        background-color: {BLUE};
+        border: 1px solid {BLUE};
+    }}
+    div[role="radiogroup"] > label:has(input:checked) p {{
+        color: white !important;
+        font-weight: 700 !important;
+    }}
+    div[role="radiogroup"] input {{
+        display: none;
+    }}
+
+    /* Tombol utama (upload/proses) - pill biru ala "Register patient" */
+    .stButton > button, .stDownloadButton > button {{
+        background-color: {BLUE};
+        color: white;
+        border-radius: 12px;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-weight: 600;
+        transition: background-color 0.15s ease-in-out;
+    }}
+    .stButton > button:hover, .stDownloadButton > button:hover {{
+        background-color: {BLUE_DARK};
+        color: white;
+    }}
+
+    /* File uploader dibuat lebih rapi/rounded */
+    section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] {{
+        background-color: {BLUE_LIGHT};
+        border: 1px dashed {BLUE};
+        border-radius: 14px;
+    }}
+
+    /* ---------- Judul halaman utama ---------- */
+    h1 {{
+        color: {TEXT_DARK};
+        font-weight: 800;
+    }}
+    h2, h3 {{
+        color: {TEXT_DARK};
+        font-weight: 700;
+    }}
+    .stCaption, p {{
+        color: {TEXT_MUTED};
+    }}
+
+    /* ---------- Kartu KPI custom ---------- */
+    .kpi-card {{
+        background: #FFFFFF;
+        border: 1px solid {CARD_BORDER};
+        border-radius: 18px;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 4px 14px rgba(36, 30, 66, 0.05);
+        height: 92px;
+    }}
+    .kpi-icon {{
+        min-width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }}
+    .kpi-value {{
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: {TEXT_DARK};
+        line-height: 1.1;
+    }}
+    .kpi-label {{
+        font-size: 0.82rem;
+        color: {TEXT_MUTED};
+        font-weight: 500;
+    }}
+
+    /* ---------- Kartu pembungkus section (chart, tabel) ---------- */
+    .section-card {{
+        background: #FFFFFF;
+        border: 1px solid {CARD_BORDER};
+        border-radius: 18px;
+        padding: 18px 20px 6px 20px;
+        box-shadow: 0 4px 14px rgba(36, 30, 66, 0.05);
+        margin-bottom: 18px;
+    }}
+    .section-title {{
+        font-size: 1rem;
+        font-weight: 700;
+        color: {TEXT_DARK};
+        margin-bottom: 6px;
+    }}
+
+    /* Dataframe */
+    div[data-testid="stDataFrame"] {{
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid {CARD_BORDER};
+    }}
+
+    /* Info/warning/success boxes lebih rounded */
+    div[data-testid="stAlert"] {{
+        border-radius: 14px;
+    }}
+</style>
+"""
+st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+# Tema matplotlib/seaborn senada dengan dashboard
+plt.rcParams.update({
+    "axes.facecolor": "white",
+    "figure.facecolor": "white",
+    "axes.edgecolor": CARD_BORDER,
+    "axes.labelcolor": TEXT_DARK,
+    "text.color": TEXT_DARK,
+    "xtick.color": TEXT_MUTED,
+    "ytick.color": TEXT_MUTED,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "grid.color": "#F0EEF9",
+    "font.family": "sans-serif",
+})
+
+def kpi_card(icon_bg, icon, value, label):
+    st.markdown(f"""
+    <div class="kpi-card">
+        <div class="kpi-icon" style="background:{icon_bg};">{icon}</div>
+        <div>
+            <div class="kpi-value">{value}</div>
+            <div class="kpi-label">{label}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def section_start(title):
+    st.markdown(f"""<div class="section-card"><div class="section-title">{title}</div>""",
+                unsafe_allow_html=True)
+
+def section_end():
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ── STOPWORDS ─────────────────────────────────────────────
 @st.cache_resource
@@ -75,14 +280,18 @@ def latih(_df):
     return model, tfidf, X_sm, y_sm, y_pred, y_proba
 
 # ── SIDEBAR ───────────────────────────────────────────────
-st.sidebar.title("👟 GEOFFMAX Dashboard")
-st.sidebar.caption("Klasifikasi Kepuasan Pelanggan Shopee")
+st.sidebar.markdown(
+    f"""<h1>👟 GEOFFMAX</h1>
+    <p style="margin-top:-10px;">Klasifikasi Kepuasan Pelanggan</p>""",
+    unsafe_allow_html=True
+)
 halaman = st.sidebar.radio("Navigasi", [
     "📊 Beranda",
     "📁 Data & Preprocessing",
     "🧠 Evaluasi Model",
     "🔮 Prediksi Ulasan Baru"
-])
+], label_visibility="collapsed")
+
 st.sidebar.markdown("---")
 st.sidebar.subheader("Upload Data")
 uploaded = st.sidebar.file_uploader(
@@ -140,16 +349,17 @@ if halaman == "📊 Beranda":
     if data_ada:
         acc = accuracy_score(y_sm, y_pred)
         auc = roc_auc_score(y_sm, y_proba[:,1])
-        c1,c2,c3,c4 = st.columns(4)
-        c1.metric("Total Ulasan",    f"{len(df)}")
-        c2.metric("Akurasi Model",   f"{acc*100:.2f}%")
-        c3.metric("AUC",             f"{auc:.3f}")
-        c4.metric("Metode Balancing","SMOTE")
 
-        st.markdown("---")
+        c1,c2,c3,c4 = st.columns(4)
+        with c1: kpi_card(BLUE_LIGHT, "📝", f"{len(df)}", "Total Ulasan")
+        with c2: kpi_card(TEAL_LIGHT,   "🎯", f"{acc*100:.2f}%", "Akurasi Model")
+        with c3: kpi_card(ORANGE_LIGHT, "📈", f"{auc:.3f}", "AUC")
+        with c4: kpi_card(CORAL_LIGHT,  "⚖️", "SMOTE", "Metode Balancing")
+
+        st.markdown("<br>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader("Distribusi Kelas Kepuasan")
+            section_start("Distribusi Kelas Kepuasan")
             dist = [df[df['Y_Label']==l].shape[0] for l in LABELS_TEXT]
             fig, ax = plt.subplots(figsize=(5,4))
             bars = ax.bar(LABELS_TEXT, dist,
@@ -159,29 +369,34 @@ if halaman == "📊 Beranda":
                 ax.text(bar.get_x()+bar.get_width()/2, v+0.5,
                         str(v), ha='center', fontweight='bold')
             ax.set_ylabel("Jumlah Ulasan")
+            ax.grid(axis='y', alpha=0.4)
             plt.tight_layout(); st.pyplot(fig)
+            section_end()
 
         with col2:
-            st.subheader("Distribusi Rating Bintang")
+            section_start("Distribusi Rating Bintang")
             rcnt = df['rating'].value_counts().sort_index()
             fig, ax = plt.subplots(figsize=(5,4))
+            warna_bar = [CORAL, CORAL, TEAL, TEAL, TEAL]
             ax.bar(rcnt.index, rcnt.values,
-                   color=['#E74C3C','#E74C3C','#27AE60','#27AE60','#27AE60'],
+                   color=warna_bar[:len(rcnt)],
                    edgecolor='white', width=0.6)
             for x, v in zip(rcnt.index, rcnt.values):
                 ax.text(x, v+0.3, str(v), ha='center', fontweight='bold')
             ax.set_xticks([1,2,3,4,5])
             ax.set_xlabel("Rating"); ax.set_ylabel("Jumlah")
+            ax.grid(axis='y', alpha=0.4)
             plt.tight_layout(); st.pyplot(fig)
+            section_end()
 
-        st.markdown("---")
-        st.subheader("Cuplikan Data")
+        section_start("Cuplikan Data")
         st.dataframe(df[['ulasan','rating','Y_Label']].head(10),
                      use_container_width=True)
+        section_end()
     else:
         st.info("Upload data CSV di sidebar kiri untuk melihat analisis lengkap.")
+        section_start("Cara menggunakan dashboard ini")
         st.markdown("""
-        **Cara menggunakan dashboard ini:**
         1. Siapkan file CSV dengan kolom `ulasan` dan `rating`
         2. Upload di sidebar kiri
         3. Dashboard otomatis memproses dan menampilkan hasil
@@ -192,6 +407,7 @@ if halaman == "📊 Beranda":
         - Algoritma: Multinomial Naïve Bayes + SMOTE
         - Validasi: 10-Fold Cross Validation
         """)
+        section_end()
 
 # ══════════════════════════════════════════════════════════
 # HALAMAN 2: DATA & PREPROCESSING
@@ -202,17 +418,19 @@ elif halaman == "📁 Data & Preprocessing":
         st.warning("Upload data CSV terlebih dahulu melalui sidebar kiri.")
         st.stop()
 
-    st.subheader("Statistik Deskriptif")
+    section_start("Statistik Deskriptif")
     df['panjang'] = df['ulasan'].str.split().str.len()
     st.dataframe(df[['rating','panjang']].describe().round(2),
                  use_container_width=True)
+    section_end()
 
-    st.subheader("Sebelum vs Sesudah Preprocessing")
+    section_start("Sebelum vs Sesudah Preprocessing")
     preview = df[['ulasan','ulasan_bersih','Y_Label']].head(10).copy()
     preview.columns = ['Ulasan Asli','Setelah Preprocessing','Label Y']
     st.dataframe(preview, use_container_width=True)
+    section_end()
 
-    st.subheader("Top 20 Kata — Bobot TF-IDF Tertinggi")
+    section_start("Top 20 Kata — Bobot TF-IDF Tertinggi")
     fitur_names = tfidf.get_feature_names_out()
     X_all       = tfidf.transform(df['ulasan_bersih'])
     mean_tfidf  = np.asarray(X_all.mean(axis=0)).flatten()
@@ -222,17 +440,22 @@ elif halaman == "📁 Data & Preprocessing":
         'Bobot TF-IDF': mean_tfidf[top20_idx]
     })
     fig, ax = plt.subplots(figsize=(8,6))
+    biru_grad = sns.light_palette(BLUE, n_colors=20, reverse=True)
     sns.barplot(data=top20, x='Bobot TF-IDF', y='Kata',
-                palette='Blues_r', ax=ax)
+                palette=biru_grad, ax=ax)
     ax.set_title('Top 20 Kata dengan Bobot TF-IDF Tertinggi')
+    ax.grid(axis='x', alpha=0.4)
     plt.tight_layout(); st.pyplot(fig)
+    section_end()
 
-    st.subheader("Distribusi Panjang Ulasan")
+    section_start("Distribusi Panjang Ulasan")
     fig, ax = plt.subplots(figsize=(8,3))
-    ax.hist(df['panjang'], bins=30, color='#2E75B6', edgecolor='white')
+    ax.hist(df['panjang'], bins=30, color=BLUE, edgecolor='white')
     ax.set_xlabel('Jumlah Kata per Ulasan')
     ax.set_ylabel('Frekuensi')
+    ax.grid(axis='y', alpha=0.4)
     plt.tight_layout(); st.pyplot(fig)
+    section_end()
 
 # ══════════════════════════════════════════════════════════
 # HALAMAN 3: EVALUASI MODEL
@@ -242,43 +465,46 @@ elif halaman == "🧠 Evaluasi Model":
     st.caption("Parameter: alpha=0.01 · TF-IDF 1000 fitur unigram · SMOTE · 10-Fold CV")
 
     if not data_ada:
-        # Tampilkan hasil statis dari model pkl
-        st.subheader("Hasil Evaluasi Model (dari data pelatihan)")
         c1,c2,c3 = st.columns(3)
-        c1.metric("Akurasi",  "88.64%")
-        c2.metric("AUC",      "0.949")
-        c3.metric("F1 Macro", "0.89")
+        with c1: kpi_card(TEAL_LIGHT,   "🎯", "88.64%", "Akurasi")
+        with c2: kpi_card(BLUE_LIGHT, "📈", "0.949",  "AUC")
+        with c3: kpi_card(ORANGE_LIGHT, "🏷️", "0.89",   "F1 Macro")
 
         st.info("Upload data CSV di sidebar untuk melihat evaluasi interaktif.")
+        section_start("Ringkasan metrik per kelas")
         st.markdown("""
-        **Ringkasan metrik per kelas:**
-
         | Kelas | Precision | Recall | F1-Score | Support |
         |---|---|---|---|---|
         | Tidak Puas | 0.85 | 0.94 | 0.89 | 264 |
         | Puas | 0.93 | 0.83 | 0.88 | 264 |
         | **Macro avg** | **0.89** | **0.89** | **0.89** | **528** |
         """)
+        section_end()
         st.stop()
 
     acc = accuracy_score(y_sm, y_pred)
     auc = roc_auc_score(y_sm, y_proba[:,1])
-    st.metric("Akurasi Keseluruhan", f"{acc*100:.2f}%")
-    st.markdown("---")
 
+    c1, c2 = st.columns(2)
+    with c1: kpi_card(TEAL_LIGHT, "🎯", f"{acc*100:.2f}%", "Akurasi Keseluruhan")
+    with c2: kpi_card(BLUE_LIGHT, "📈", f"{auc:.3f}", "AUC")
+
+    st.markdown("<br>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader("Confusion Matrix")
+        section_start("Confusion Matrix")
         cm = confusion_matrix(y_sm, y_pred, labels=LABELS_ORDER)
         fig, ax = plt.subplots(figsize=(5,4))
-        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+        biru_cmap = sns.light_palette(BLUE, as_cmap=True)
+        sns.heatmap(cm, annot=True, fmt='d', cmap=biru_cmap,
                     xticklabels=LABELS_TEXT, yticklabels=LABELS_TEXT,
                     ax=ax, linewidths=0.5, annot_kws={'size':14})
         ax.set_xlabel("Prediksi"); ax.set_ylabel("Aktual")
         plt.tight_layout(); st.pyplot(fig)
+        section_end()
 
     with col2:
-        st.subheader("Metrik per Kelas")
+        section_start("Metrik per Kelas")
         report = classification_report(y_sm, y_pred,
                      target_names=LABELS_TEXT, output_dict=True)
         ring = pd.DataFrame({
@@ -289,28 +515,27 @@ elif halaman == "🧠 Evaluasi Model":
             'Support':   [int(report[l]['support']) for l in LABELS_TEXT],
         })
         st.dataframe(ring.round(4), use_container_width=True, hide_index=True)
-        st.metric("AUC", f"{auc:.3f}")
+        section_end()
 
-    st.markdown("---")
-    st.subheader("ROC Curve")
+    section_start("ROC Curve")
     fpr, tpr, _ = roc_curve(y_sm, y_proba[:,1])
     fig, ax = plt.subplots(figsize=(7,5))
-    ax.plot(fpr, tpr, color='#2E75B6', lw=2,
+    ax.plot(fpr, tpr, color=BLUE, lw=2,
             label=f'Naive Bayes (AUC = {auc:.3f})')
-    ax.fill_between(fpr, tpr, alpha=0.1, color='#2E75B6')
-    ax.plot([0,1],[0,1],'--', color='gray', label='Random Guess')
+    ax.fill_between(fpr, tpr, alpha=0.12, color=BLUE)
+    ax.plot([0,1],[0,1],'--', color='#C9C6DE', label='Random Guess')
     ax.set_xlabel("False Positive Rate")
     ax.set_ylabel("True Positive Rate")
     ax.legend(fontsize=11)
-    ax.set_title("ROC Curve — Multinomial Naïve Bayes")
+    ax.grid(alpha=0.4)
     plt.tight_layout(); st.pyplot(fig)
+    section_end()
 
-    st.markdown("---")
-    st.subheader("Kata Paling Berpengaruh per Kelas")
+    section_start("Kata Paling Berpengaruh per Kelas")
     fitur_names = tfidf.get_feature_names_out()
     fig, axes = plt.subplots(1, 2, figsize=(12,5))
     for cls_idx, (cls_name, color) in enumerate(zip(LABELS_TEXT,
-                                               ['#E74C3C','#27AE60'])):
+                                               [CORAL, TEAL])):
         log_prob   = model.feature_log_prob_[cls_idx]
         top10_idx  = log_prob.argsort()[-10:][::-1]
         top10_kata = [fitur_names[i] for i in top10_idx]
@@ -318,8 +543,9 @@ elif halaman == "🧠 Evaluasi Model":
         axes[cls_idx].barh(top10_kata[::-1], top10_skor[::-1], color=color)
         axes[cls_idx].set_title(f'{cls_name}', fontsize=12)
         axes[cls_idx].set_xlabel('Log Probability')
-    plt.suptitle('Top 10 Kata per Kelas Kepuasan', fontsize=13, fontweight='bold')
+        axes[cls_idx].grid(axis='x', alpha=0.4)
     plt.tight_layout(); st.pyplot(fig)
+    section_end()
 
     st.info("💡 Screenshot halaman ini untuk Tabel & Grafik Bab IV skripsi.")
 
@@ -334,13 +560,17 @@ elif halaman == "🔮 Prediksi Ulasan Baru":
         st.error("Model belum tersedia. Upload CSV atau pastikan file model.pkl ada di repository.")
         st.stop()
 
+    section_start("Input Ulasan")
     teks_input = st.text_area(
         "Ketik atau paste ulasan di sini:",
         height=120,
-        placeholder="Contoh: sepatunya bagus banget, nyaman dipakai seharian, ukuran pas!"
+        placeholder="Contoh: sepatunya bagus banget, nyaman dipakai seharian, ukuran pas!",
+        label_visibility="collapsed"
     )
+    klik = st.button("🔍 Klasifikasikan Ulasan", type="primary")
+    section_end()
 
-    if st.button("🔍 Klasifikasikan Ulasan", type="primary"):
+    if klik:
         if teks_input.strip():
             teks_bersih = preprocess(teks_input, stopwords)
             if not teks_bersih.strip():
@@ -351,14 +581,15 @@ elif halaman == "🔮 Prediksi Ulasan Baru":
                 pred_proba  = model.predict_proba(inp)[0]
                 label_hasil = LABEL_MAP[pred_kelas]
 
+                section_start("Hasil Klasifikasi")
                 if label_hasil == "Puas":
-                    st.success(f"### Hasil Klasifikasi: {label_hasil} 😊")
+                    kpi_card(TEAL_LIGHT, "😊", label_hasil, "Prediksi Kepuasan")
                 else:
-                    st.error(f"### Hasil Klasifikasi: {label_hasil} 😞")
+                    kpi_card(CORAL_LIGHT, "😞", label_hasil, "Prediksi Kepuasan")
 
                 st.caption(f"Teks setelah preprocessing: *{teks_bersih}*")
 
-                st.subheader("Probabilitas Tiap Kelas")
+                st.markdown("**Probabilitas Tiap Kelas**")
                 fig, ax = plt.subplots(figsize=(6,2.5))
                 bars = ax.barh(LABELS_TEXT, pred_proba,
                                color=[WARNA[l] for l in LABELS_TEXT])
@@ -367,11 +598,12 @@ elif halaman == "🔮 Prediksi Ulasan Baru":
                     ax.text(v+0.01, bar.get_y()+bar.get_height()/2,
                             f"{v*100:.1f}%", va='center', fontweight='bold')
                 ax.set_xlabel("Probabilitas")
+                ax.grid(axis='x', alpha=0.4)
                 plt.tight_layout(); st.pyplot(fig)
+                section_end()
         else:
             st.warning("Mohon isi teks ulasan terlebih dahulu.")
 
-    st.markdown("---")
     st.info(
         "💡 Fitur ini adalah **prototipe sistem klasifikasi otomatis** — "
         "ulasan baru dari Shopee bisa langsung diklasifikasikan "
