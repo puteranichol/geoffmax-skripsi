@@ -96,6 +96,15 @@ CUSTOM_CSS = f"""
     div[role="radiogroup"] input {{
         display: none;
     }}
+    /* Sembunyikan lingkaran visual radio (bukan cuma input aslinya) */
+    div[role="radiogroup"] label div[data-baseweb="radio"] {{
+        display: none !important;
+    }}
+    div[role="radiogroup"] label {{
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }}
 
     /* Tombol utama (upload/proses) - pill biru ala "Register patient" */
     .stButton > button, .stDownloadButton > button {{
