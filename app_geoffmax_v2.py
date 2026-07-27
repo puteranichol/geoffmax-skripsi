@@ -100,16 +100,30 @@ CUSTOM_CSS = f"""
     /* Tombol utama (upload/proses) - pill biru ala "Register patient" */
     .stButton > button, .stDownloadButton > button {{
         background-color: {BLUE};
-        color: white;
+        color: #FFFFFF !important;
         border-radius: 12px;
         border: none;
         padding: 0.6rem 1.2rem;
         font-weight: 600;
         transition: background-color 0.15s ease-in-out;
     }}
+    .stButton > button *, .stDownloadButton > button * {{
+        color: #FFFFFF !important;
+    }}
     .stButton > button:hover, .stDownloadButton > button:hover {{
         background-color: {BLUE_DARK};
-        color: white;
+        color: #FFFFFF !important;
+    }}
+    .stButton > button:hover *, .stDownloadButton > button:hover * {{
+        color: #FFFFFF !important;
+    }}
+    .stButton > button:focus, .stButton > button:active,
+    .stDownloadButton > button:focus, .stDownloadButton > button:active {{
+        color: #FFFFFF !important;
+        box-shadow: none;
+    }}
+    .stButton > button:focus *, .stButton > button:active * {{
+        color: #FFFFFF !important;
     }}
 
     /* File uploader dibuat lebih rapi/rounded */
