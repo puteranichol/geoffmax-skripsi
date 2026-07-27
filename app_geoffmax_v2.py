@@ -84,17 +84,36 @@ CUSTOM_CSS = f"""
     div[role="radiogroup"] > label:hover {{
         background-color: {BLUE_LIGHT};
     }}
+    /* Item aktif: tanpa kotak biru, cukup teks tebal berwarna biru */
     div[role="radiogroup"] > label[data-checked="true"],
     div[role="radiogroup"] > label:has(input:checked) {{
-        background-color: {BLUE};
-        border: 1px solid {BLUE};
+        background-color: transparent;
+        border: 1px solid transparent;
     }}
     div[role="radiogroup"] > label:has(input:checked) p {{
-        color: white !important;
+        color: {BLUE} !important;
         font-weight: 700 !important;
     }}
-    div[role="radiogroup"] input {{
-        display: none;
+    div[role="radiogroup"] label {{
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }}
+
+    /* Lingkaran radio dijadikan biru (baik saat aktif/merah maupun tidak aktif/abu-abu) */
+    div[role="radiogroup"] label div[data-baseweb="radio"] > div {{
+        border-color: {BLUE} !important;
+    }}
+    div[role="radiogroup"] label div[data-baseweb="radio"] input:checked ~ div {{
+        border-color: {BLUE} !important;
+        background-color: transparent !important;
+    }}
+    div[role="radiogroup"] label div[data-baseweb="radio"] input:checked ~ div > div,
+    div[role="radiogroup"] label div[data-baseweb="radio"] input:checked ~ div::after {{
+        background-color: {BLUE} !important;
+    }}
+    div[role="radiogroup"] label div[data-baseweb="radio"] svg {{
+        fill: {BLUE} !important;
     }}
 
     /* Tombol utama (upload/proses) - pill biru ala "Register patient" */
