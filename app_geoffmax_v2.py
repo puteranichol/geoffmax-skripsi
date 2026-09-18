@@ -371,7 +371,7 @@ else:
 # HALAMAN 1: BERANDA
 # ══════════════════════════════════════════════════════════
 if halaman == "📊 Beranda":
-    st.title("Dashboard Klasifikasi Kepuasan Pelanggan Terhadap Produk Dublin di GEOFFMAX")
+    st.title("Dashboard Klasifikasi Kepuasan Pelanggan Terhadap Produk Dublin  GEOFFMAX")
     st.caption("Produk Sepatu Terlaris · Naïve Bayes 5 Kelas + Chi-Square · CRISP-DM")
 
     akurasi_cv_num = meta['akurasi'] if meta else 0.7966
@@ -392,7 +392,7 @@ if halaman == "📊 Beranda":
         with c3: kpi_card(ORANGE_LIGHT, "📈", f"{auc:.3f}", "AUC (thd data upload)")
         with c4: kpi_card(PURPLE_LIGHT, "🔎", "Chi-Square", "Seleksi Fitur")
 
-        section_start("Penjelasan Angka diatas")
+        section_start()
         interpretasi(
             f"Dashboard ini memuat <b>{len(df)} ulasan</b> pelanggan GEOFFMAX. "
             f"<b>Akurasi {akurasi_statis}</b> adalah persentase prediksi kepuasan yang benar, "
