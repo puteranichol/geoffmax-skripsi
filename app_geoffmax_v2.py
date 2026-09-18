@@ -372,7 +372,7 @@ else:
 # ══════════════════════════════════════════════════════════
 if halaman == "📊 Beranda":
     st.title("Dashboard Klasifikasi Kepuasan Pelanggan GEOFFMAX")
-    st.caption("Produk Sepatu di Shopee · Naïve Bayes 5 Kelas + Chi-Square · CRISP-DM")
+    st.caption("Produk Sepatu Series Dublin · Naïve Bayes 5 Kelas + Chi-Square · CRISP-DM")
 
     akurasi_cv_num = meta['akurasi'] if meta else 0.7966
     akurasi_statis = f"{akurasi_cv_num*100:.2f}%"
@@ -392,13 +392,11 @@ if halaman == "📊 Beranda":
         with c3: kpi_card(ORANGE_LIGHT, "📈", f"{auc:.3f}", "AUC (thd data upload)")
         with c4: kpi_card(PURPLE_LIGHT, "🔎", "Chi-Square", "Seleksi Fitur")
 
-        section_start("Cara Membaca Angka di Atas")
+        section_start("")
         interpretasi(
             f"Dashboard ini memuat <b>{len(df)} ulasan</b> pelanggan GEOFFMAX. "
             f"<b>Akurasi {akurasi_statis}</b> adalah persentase prediksi kepuasan yang benar, "
             "dihitung dari hasil training resmi model (10-Fold Cross Validation)  "
-            "angka ini tidak dihitung ulang dari CSV yang diupload, supaya hasilnya tetap jujur "
-            "dan tidak bias tinggi karena model 'menghafal' data yang sama. "
             f"<b>AUC {auc:.3f}</b> mengukur seberapa baik model membedakan antar kelas kepuasan "
             "pada data yang baru saja diupload — semakin dekat ke 1.0, semakin baik model memisahkan kelasnya. "
             "Fitur dipilih otomatis menggunakan metode <b>Chi-Square</b>, yaitu kata-kata yang paling "
