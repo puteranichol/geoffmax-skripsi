@@ -159,7 +159,6 @@ def interpretasi(teks):
     <div style="background:{BLUE_LIGHT}; border-left:4px solid {BLUE}; border-radius:10px;
                 padding:10px 14px; margin-top:12px; margin-bottom:4px;
                 font-size:0.88rem; line-height:1.5; color:{TEXT_DARK};">
-        💡 <b>Penjelasan:</b> {teks}
     </div>
     """, unsafe_allow_html=True)
 
