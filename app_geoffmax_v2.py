@@ -396,7 +396,7 @@ if halaman == "📊 Beranda":
         interpretasi(
             f"Dashboard ini memuat <b>{len(df)} ulasan</b> pelanggan GEOFFMAX. "
             f"<b>Akurasi {akurasi_statis}</b> adalah persentase prediksi kepuasan yang benar, "
-            "dihitung dari hasil training resmi model (10-Fold Cross Validation) di Bab IV — "
+            "dihitung dari hasil training resmi model (10-Fold Cross Validation)  "
             "angka ini tidak dihitung ulang dari CSV yang diupload, supaya hasilnya tetap jujur "
             "dan tidak bias tinggi karena model 'menghafal' data yang sama. "
             f"<b>AUC {auc:.3f}</b> mengukur seberapa baik model membedakan antar kelas kepuasan "
