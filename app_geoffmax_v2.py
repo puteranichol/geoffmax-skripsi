@@ -392,7 +392,7 @@ if halaman == "📊 Beranda":
         with c3: kpi_card(ORANGE_LIGHT, "📈", f"{auc:.3f}", "AUC (thd data upload)")
         with c4: kpi_card(PURPLE_LIGHT, "🔎", "Chi-Square", "Seleksi Fitur")
 
-        section_start()
+        section_start("Cara Membaca Angka di Atas")
         interpretasi(
             f"Dashboard ini memuat <b>{len(df)} ulasan</b> pelanggan GEOFFMAX. "
             f"<b>Akurasi {akurasi_statis}</b> adalah persentase prediksi kepuasan yang benar, "
